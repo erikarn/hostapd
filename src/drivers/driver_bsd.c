@@ -665,7 +665,11 @@ rtbuf_len(void)
 static int bsd_sta_deauth(void *priv, const u8 *own_addr, const u8 *addr,
 			  u16 reason_code);
 
+#if defined(__DragonFly__)
+const char *
+#else
 static const char *
+#endif /* __DragonFly__ */
 ether_sprintf(const u8 *addr)
 {
 	static char buf[sizeof(MACSTR)];
