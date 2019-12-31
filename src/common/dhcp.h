@@ -18,6 +18,25 @@
 #undef __FAVOR_BSD
 #endif
 
+/*
+ * This is compatibility stuff to work around the linux-specific bits
+ * in the includes here.
+ */
+#if defined(__FreeBSD__) || defined(__DragonFly__)
+#define	iphdr		ip
+#define	ihl		ip_hl
+#define	verson		ip_v
+#define	tos		ip_tos
+#define	tot_len		ip_len
+#define	id		ip_id
+#define	frag_off	ip_off
+#define	ttl		ip_ttl
+#define	protocol	ip_p
+#define	check		ip_sum
+#define	saddr		ip_src
+#define	daddr		ip_dst
+#endif /* FreeBSD */
+
 #define DHCP_SERVER_PORT 67
 #define DHCP_CLIENT_PORT 68
 
