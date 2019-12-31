@@ -8,7 +8,21 @@ install:
 
 include ../lib.rules
 
-LIB_OBJS = l2_packet_linux.o
+ifdef CONFIG_L2_PACKET
+ifdef CONFIG_DNET_PCAP
+ifdef CONFIG_L2_FREEBSD
+LIBS += -lpcap
+LIB_OBJS += l2_packet_freebsd.o
+else
+LIBS += -ldnet -lpcap
+LIB_OBJS += l2_packet_pcap.o
+endif
+else
+LIB_OBJS += l2_packet_linux.o
+endif
+else
+LIB_OBJS += l2_packet_none.o
+endif
 
 libl2_packet.a: $(LIB_OBJS)
 	$(AR) crT $@ $?

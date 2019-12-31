@@ -2,6 +2,9 @@ ifndef CC
 CC=gcc
 endif
 
+include $(ROOTDIR)/config
+include $(ROOTDIR)/config.rules
+
 ifndef CFLAGS
 CFLAGS = -MMD -O2 -Wall -g
 endif
@@ -14,7 +17,6 @@ endif
 CFLAGS += $(FUZZ_CFLAGS)
 CFLAGS += -I.. -I../utils
 
-
 Q=@
 E=echo
 ifeq ($(V), 1)
@@ -26,6 +28,12 @@ Q=@
 E=true
 endif
 
+ifdef CONFIG_CODE_COVERAGE
+%.o: %.c
+	@$(E) "  CC " $<
+	$(Q)cd $(dir $@); $(CC) -c -o $(notdir $@) $(CFLAGS) $(notdir $<)
+else
 %.o: %.c
 	$(Q)$(CC) -c -o $@ $(CFLAGS) $<
 	@$(E) "  CC " $<
+endif

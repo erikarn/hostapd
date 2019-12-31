@@ -48,7 +48,6 @@ LIB_OBJS= \
 	ieee802_1x.o \
 	neighbor_db.o \
 	ndisc_snoop.o \
-	p2p_hostapd.o \
 	pmksa_cache_auth.o \
 	preauth_auth.o \
 	rrm.o \
@@ -66,6 +65,10 @@ LIB_OBJS= \
 	wpa_auth_ie.o \
 	wps_hostapd.o \
 	x_snoop.o
+
+ifdef CONFIG_P2P
+	p2p_hostapd.o \
+endif
 
 libap.a: $(LIB_OBJS)
 	$(AR) crT $@ $?
