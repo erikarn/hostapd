@@ -435,7 +435,9 @@ static void hostapd_free_hapd_data(struct hostapd_data *hapd)
 			os_free(q);
 		}
 	}
+#ifdef CONFIG_AP_MLME
 	eloop_cancel_timeout(auth_sae_process_commit, hapd, NULL);
+#endif /* CONFIG_AP_MLME */
 #endif /* CONFIG_SAE */
 }
 

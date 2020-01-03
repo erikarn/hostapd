@@ -265,7 +265,9 @@ void ap_free_sta(struct hostapd_data *hapd, struct sta_info *sta)
 	eloop_cancel_timeout(ap_handle_session_timer, hapd, sta);
 	eloop_cancel_timeout(ap_handle_session_warning_timer, hapd, sta);
 	ap_sta_clear_disconnect_timeouts(hapd, sta);
+#ifdef CONFIG_AP_MLME
 	sae_clear_retransmit_timer(hapd, sta);
+#endif /* CONFIG_AP_MLME */
 
 	ieee802_1x_free_station(hapd, sta);
 	wpa_auth_sta_deinit(sta->wpa_sm);
