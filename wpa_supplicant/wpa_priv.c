@@ -1032,8 +1032,8 @@ static void wpa_priv_send_ft_response(struct wpa_priv_interface *iface,
 }
 
 
-void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
-			  union wpa_event_data *data)
+void supplicant_priv_wpa_event(void *ctx, enum wpa_event_type event,
+			       union wpa_event_data *data)
 {
 	struct wpa_priv_interface *iface = ctx;
 
@@ -1096,8 +1096,8 @@ void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
 }
 
 
-void wpa_supplicant_event_global(void *ctx, enum wpa_event_type event,
-				 union wpa_event_data *data)
+void supplicant_priv_wpa_event_global(void *ctx, enum wpa_event_type event,
+				       union wpa_event_data *data)
 {
 	struct wpa_priv_global *global = ctx;
 	struct wpa_priv_interface *iface;
@@ -1207,6 +1207,9 @@ int main(int argc, char *argv[])
 
 	if (os_program_init())
 		return -1;
+
+	register_wpa_supplicant_event_funcs(supplicant_priv_wpa_event,
+					    supplicant_priv_wpa_event_global);
 
 	wpa_priv_fd_workaround();
 

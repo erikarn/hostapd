@@ -5703,8 +5703,9 @@ union wpa_event_data {
  * Driver wrapper code should call this function whenever an event is received
  * from the driver.
  */
-void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
+typedef void wpa_supplicant_event_t(void *ctx, enum wpa_event_type event,
 			  union wpa_event_data *data);
+extern wpa_supplicant_event_t *wpa_supplicant_event;
 
 /**
  * wpa_supplicant_event_global - Report a driver event for wpa_supplicant
@@ -5716,8 +5717,22 @@ void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
  * Same as wpa_supplicant_event(), but we search for the interface in
  * wpa_global.
  */
-void wpa_supplicant_event_global(void *ctx, enum wpa_event_type event,
+typedef void wpa_supplicant_event_global_t(void *ctx, enum wpa_event_type event,
 				 union wpa_event_data *data);
+extern wpa_supplicant_event_global_t *wpa_supplicant_event_global;
+
+/**
+ * register_wpa_supplicant_event_funcs - Register event/global event callbacks
+ *
+ * @event: wpa_supplicant_event callback
+ * @global_event: wpa_supplicant_event_global callback
+ */
+static inline void register_wpa_supplicant_event_funcs(wpa_supplicant_event_t *event,
+				wpa_supplicant_event_global_t *global_event)
+{
+	wpa_supplicant_event = event;
+	wpa_supplicant_event_global = global_event;
+}
 
 /*
  * The following inline functions are provided for convenience to simplify

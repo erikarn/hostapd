@@ -30,7 +30,10 @@
 #include "ctrl_iface.h"
 #include "pcsc_funcs.h"
 #include "wpas_glue.h"
+#include "drivers/driver.h"
 
+wpa_supplicant_event_t *wpa_supplicant_event;
+wpa_supplicant_event_global_t *wpa_supplicant_event_global;
 
 const struct wpa_driver_ops *const wpa_drivers[] = { NULL };
 
@@ -1311,6 +1314,9 @@ int main(int argc, char *argv[])
 
 	if (os_program_init())
 		return -1;
+
+	register_wpa_supplicant_event_funcs(supplicant_wpa_event,
+					    supplicant_wpa_event_global);
 
 	hostapd_logger_register_cb(hostapd_logger_cb);
 

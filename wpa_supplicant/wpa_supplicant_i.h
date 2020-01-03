@@ -1370,6 +1370,10 @@ void wpa_supplicant_deinit(struct wpa_global *global);
 int wpa_supplicant_scard_init(struct wpa_supplicant *wpa_s,
 			      struct wpa_ssid *ssid);
 void wpa_supplicant_terminate_proc(struct wpa_global *global);
+void supplicant_wpa_event(void *ctx, enum wpa_event_type event,
+			  union wpa_event_data *data);
+void supplicant_wpa_event_global(void *ctx, enum wpa_event_type event,
+				 union wpa_event_data *data);
 void wpa_supplicant_rx_eapol(void *ctx, const u8 *src_addr,
 			     const u8 *buf, size_t len);
 void wpa_supplicant_update_config(struct wpa_supplicant *wpa_s);

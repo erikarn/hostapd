@@ -679,6 +679,9 @@ int main(int argc, char *argv[])
 		return -1;
 #endif /* CONFIG_DPP */
 
+	register_wpa_supplicant_event_funcs(hostapd_wpa_event,
+					    hostapd_wpa_event_global);
+
 	for (;;) {
 		c = getopt(argc, argv, "b:Bde:f:hi:KP:sSTtu:vg:G:");
 		if (c < 0)
